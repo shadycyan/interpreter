@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Token {
+public enum Token: Equatable {
 	case illegal(String)
 	case eof
 	case ident(String)
