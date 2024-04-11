@@ -16,5 +16,15 @@ let package = Package(
 			dependencies: [],
 			path: "Sources/Token"
 		),
+		.target(
+			name: "Lexer",
+			dependencies: ["Token"],
+			path: "Sources/Lexer"
+		),
+		.testTarget(
+			name: "LexerTests",
+			dependencies: ["Lexer", "Token"],
+			path: "Tests"
+		),
 	]
 )
