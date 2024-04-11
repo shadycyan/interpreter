@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Token {
+public enum Token {
 	case illegal(String)
 	case eof
 	case ident(String)
@@ -23,7 +23,7 @@ enum Token {
 	case function
 	case `let`
 
-	var literal: String {
+	public var literal: String {
 		switch self {
 		case let .illegal(literal): return literal
 		case .eof: return "EOF"

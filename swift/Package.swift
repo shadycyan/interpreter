@@ -11,5 +11,10 @@ let package = Package(
 		.executableTarget(
 			name: "Monkey"
 		),
+		.target(
+			name: "Token",
+			dependencies: [],
+			path: "Sources/Token"
+		),
 	]
 )
