@@ -17,15 +17,18 @@ final class LexerTests: XCTestCase {
 			.semi,
 		]
 
-		let lexer = Lexer(input: input)
+		var lexer = Lexer(input: input)
 
-		for (i, testToken) in tokens.enumerated() {
-			let token: Token = lexer.getNextToken()
+		for (i, expectedToken) in tokens.enumerated() {
+			guard let token = try? lexer.getNextToken() else {
+				XCTFail("Failed to get next token")
+				return
+			}
 
 			XCTAssertEqual(
-				testToken,
+				expectedToken,
 				token,
-				"tokens[\(i)] - \(testToken.literal != token.literal ? "literal" : "type") wrong. expected=\(testToken.literal), got=\(token.literal)"
+				"Token at index \(i) does not match. Expected: \(expectedToken), Actual: \(token)"
 			)
 		}
 	}
