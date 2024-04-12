@@ -66,3 +66,7 @@ public struct Lexer {
 enum LexerError: Error {
 	case unexpectedCharacter(Character)
 }
+
+extension Character {
+	var isLetterOrUnderscore: Bool { isLetter || self == "_" }
+}
