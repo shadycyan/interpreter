@@ -34,7 +34,12 @@ public struct Lexer {
 		case "+": return .plus
 		case "=": return .equal
 		case "\0": return .eof
-		default: throw LexerError.unexpectedCharacter(Character(UnicodeScalarType(character)))
+		default:
+			if character.isLetterOrUnderscore {
+				return Token.lookupKeywords(identifier: readIdentifier())
+			} else {
+				return .illegal(String(character))
+			}
 		}
 	}
 
@@ -47,6 +52,14 @@ public struct Lexer {
 			character = input[readPosition]
 			readPosition = input.index(after: readPosition)
 		}
+	}
+
+	mutating func readIdentifier() -> String {
+		let pos = position
+		repeat {
+			readChar()
+		} while character.isLetterOrUnderscore
+		return String(input[pos...position])
 	}
 }
 
