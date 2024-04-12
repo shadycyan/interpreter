@@ -22,18 +22,18 @@ public struct Lexer {
 	}
 
 	mutating func getNextToken() throws -> Token {
-		var token: Token
+		defer { readChar() }
 
 		switch character {
-		case "{": token = .lSquirly
-		case "}": token = .rSquirly
-		case "(": token = .lParen
-		case ")": token = .rParen
-		case ",": token = .comma
-		case ";": token = .semi
-		case "+": token = .plus
-		case "=": token = .equal
-		case "\0": token = .eof
+		case "{": return .lSquirly
+		case "}": return .rSquirly
+		case "(": return .lParen
+		case ")": return .rParen
+		case ",": return .comma
+		case ";": return .semi
+		case "+": return .plus
+		case "=": return .equal
+		case "\0": return .eof
 		default: throw LexerError.unexpectedCharacter(Character(UnicodeScalarType(character)))
 		}
 	}
