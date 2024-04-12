@@ -40,6 +40,8 @@ final class LexerTests: XCTestCase {
 			.plus,
 			.ident("y"),
 			.semi,
+			.rSquirly,
+			.semi,
 			.let,
 			.ident("result"),
 			.equal,
