@@ -22,6 +22,8 @@ public struct Lexer {
 	}
 
 	mutating func nextToken() throws -> Token {
+		skipWhitespace()
+
 		defer { readChar() }
 
 		switch character {
@@ -60,6 +62,12 @@ public struct Lexer {
 			readChar()
 		} while character.isLetterOrUnderscore
 		return String(input[pos...position])
+	}
+
+	mutating func skipWhitespace() {
+		while character.isWhitespace {
+			readChar()
+		}
 	}
 }
 
