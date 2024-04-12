@@ -7,7 +7,7 @@ final class LexerTests: XCTestCase {
 		let input = "=+(){},;"
 
 		let tokens: [Token] = [
-			.assign,
+			.equal,
 			.plus,
 			.lParen,
 			.rParen,

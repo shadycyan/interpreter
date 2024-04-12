@@ -12,7 +12,7 @@ public enum Token: Equatable {
 	case eof
 	case ident(String)
 	case int(String)
-	case assign
+	case equal
 	case plus
 	case comma
 	case semi
@@ -26,10 +26,10 @@ public enum Token: Equatable {
 	public var literal: String {
 		switch self {
 		case let .illegal(literal): return literal
-		case .eof: return "EOF"
+		case .eof: return ""
 		case let .ident(literal): return literal
 		case let .int(literal): return literal
-		case .assign: return "="
+		case .equal: return "="
 		case .plus: return "+"
 		case .comma: return ","
 		case .semi: return ";"
