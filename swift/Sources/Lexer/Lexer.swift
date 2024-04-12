@@ -36,20 +36,17 @@ public struct Lexer {
 		case "\0": token = .eof
 		default: throw LexerError.unexpectedCharacter(Character(UnicodeScalarType(character)))
 		}
-
-		readChar()
-		return token
 	}
 
 	mutating func readChar() {
+		position = readPosition
+
 		if readPosition >= input.endIndex {
 			character = "\0"
 		} else {
 			character = input[readPosition]
+			readPosition = input.index(after: readPosition)
 		}
-
-		position = readPosition
-		readPosition = input.index(after: readPosition)
 	}
 }
 
