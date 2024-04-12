@@ -22,7 +22,7 @@ public struct Lexer {
 		readChar()
 	}
 
-	mutating func nextToken() throws -> Token {
+	mutating func nextToken() -> Token {
 		skipWhitespace()
 
 		let token: Token
