@@ -9,51 +9,58 @@ import Foundation
 import Token
 
 public struct Lexer {
-	private let input: String
-	private var position: String.Index // current position in input (points to current char)
-	private var readPosition: String.Index // current reading position in input (after current char)
-	private var character: Character = "\0" // current char under examination
+	private let input: [UInt8]
+	private var position: Int // current position in input (points to current char)
+	private var readPosition: Int // current reading position in input (after current char)
+	private var ch: UInt8 = .zero // current char under examination
+	private var character: Character { Character(UnicodeScalar(ch)) }
 
 	init(input: String) {
-		self.input = input
-		position = input.startIndex
-		readPosition = input.startIndex
+		self.input = Array(input.utf8)
+		position = 0
+		readPosition = 0
 		readChar()
 	}
 
 	mutating func nextToken() throws -> Token {
 		skipWhitespace()
 
-		defer { readChar() }
-
+		let token: Token
 		switch character {
-		case "{": return .lSquirly
-		case "}": return .rSquirly
-		case "(": return .lParen
-		case ")": return .rParen
-		case ",": return .comma
-		case ";": return .semi
-		case "+": return .plus
-		case "=": return .equal
-		case "\0": return .eof
+		case "{": token = .lSquirly
+		case "}": token = .rSquirly
+		case "(": token = .lParen
+		case ")": token = .rParen
+		case ",": token = .comma
+		case ";": token = .semi
+		case "+": token = .plus
+		case "=": token = .equal
+		case "\0": token = .eof
 		default:
 			if character.isLetterOrUnderscore {
-				return Token.lookupKeywords(identifier: readIdentifier())
+				token = Token.lookupKeywords(identifier: readIdentifier())
+				return token
+			} else if character.isNumber {
+				token = .int(readNumber())
+				return token
 			} else {
-				return .illegal(String(character))
+				token = .illegal(String(character))
 			}
 		}
+
+		readChar()
+		return token
 	}
 
 	mutating func readChar() {
-		position = readPosition
-
-		if readPosition >= input.endIndex {
-			character = "\0"
+		if readPosition > input.index(before: input.endIndex) {
+			ch = .zero
 		} else {
-			character = input[readPosition]
-			readPosition = input.index(after: readPosition)
+			ch = input[readPosition]
 		}
+
+		position = readPosition
+		readPosition = input.index(after: readPosition)
 	}
 
 	mutating func readIdentifier() -> String {
@@ -61,7 +68,15 @@ public struct Lexer {
 		repeat {
 			readChar()
 		} while character.isLetterOrUnderscore
-		return String(input[pos...position])
+		return String(decoding: Array(input[pos..<position]), as: UTF8.self)
+	}
+
+	mutating func readNumber() -> String {
+		let pos = position
+		repeat {
+			readChar()
+		} while character.isNumber
+		return String(decoding: Array(input[pos..<position]), as: UTF8.self)
 	}
 
 	mutating func skipWhitespace() {
