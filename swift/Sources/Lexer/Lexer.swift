@@ -21,7 +21,7 @@ public struct Lexer {
 		readChar()
 	}
 
-	mutating func getNextToken() throws -> Token {
+	mutating func nextToken() throws -> Token {
 		defer { readChar() }
 
 		switch character {

@@ -20,7 +20,7 @@ final class LexerTests: XCTestCase {
 		var lexer = Lexer(input: input)
 
 		for (i, expectedToken) in tokens.enumerated() {
-			guard let token = try? lexer.getNextToken() else {
+			guard let token = try? lexer.nextToken() else {
 				XCTFail("Failed to get next token")
 				return
 			}
