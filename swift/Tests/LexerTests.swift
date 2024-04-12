@@ -5,7 +5,7 @@ import XCTest
 final class LexerTests: XCTestCase {
 	func testNextToken() {
 		let input = """
-		input := `let five = 5;
+		let five = 5;
 		let ten = 10;
 
 		let add = fn(x, y) {
@@ -15,7 +15,7 @@ final class LexerTests: XCTestCase {
 		let result = add(five, ten);
 		"""
 
-		let tokens: [Token] = [
+		let tests: [Token] = [
 			.let,
 			.ident("five"),
 			.equal,
@@ -55,7 +55,7 @@ final class LexerTests: XCTestCase {
 
 		var lexer = Lexer(input: input)
 
-		for (i, expectedToken) in tokens.enumerated() {
+		for (i, expectedToken) in tests.enumerated() {
 			guard let token = try? lexer.nextToken() else {
 				XCTFail("Failed to get next token")
 				return
@@ -64,7 +64,7 @@ final class LexerTests: XCTestCase {
 			XCTAssertEqual(
 				expectedToken,
 				token,
-				"Token at index \(i) does not match. Expected: \(expectedToken), Actual: \(token)"
+				"tests[\(i)] - Expected: \(expectedToken), Actual: \(token)"
 			)
 		}
 	}
