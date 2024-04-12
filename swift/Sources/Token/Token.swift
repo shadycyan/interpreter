@@ -41,4 +41,10 @@ public enum Token: Equatable {
 		case .let: return "let"
 		}
 	}
+
+	static var keywords: [Token] = [
+		.let,
+		.function,
+	]
+
 }
