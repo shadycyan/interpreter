@@ -27,21 +27,21 @@ public struct Lexer {
 
 		let token: Token
 		switch character {
-		case "{": token = .lSquirly
-		case "}": token = .rSquirly
-		case "(": token = .lParen
-		case ")": token = .rParen
-		case ",": token = .comma
-		case ";": token = .semi
-		case "+": token = .plus
 		case "=": token = .equal
-		case "\0": token = .eof
+		case "+": token = .plus
 		case "-": token = .minus
 		case "!": token = .bang
 		case "*": token = .asterisk
 		case "/": token = .forwardSlash
 		case "<": token = .lessThan
 		case ">": token = .greaterThan
+		case ";": token = .semi
+		case ",": token = .comma
+		case "(": token = .lParen
+		case ")": token = .rParen
+		case "{": token = .lSquirly
+		case "}": token = .rSquirly
+		case "\0": token = .eof
 		default:
 			if character.isLetterOrUnderscore {
 				token = Token.lookupKeywords(identifier: readIdentifier())
