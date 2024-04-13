@@ -36,6 +36,12 @@ public struct Lexer {
 		case "+": token = .plus
 		case "=": token = .equal
 		case "\0": token = .eof
+		case "-": token = .minus
+		case "!": token = .bang
+		case "*": token = .asterisk
+		case "/": token = .forwardSlash
+		case "<": token = .lessThan
+		case ">": token = .greaterThan
 		default:
 			if character.isLetterOrUnderscore {
 				token = Token.lookupKeywords(identifier: readIdentifier())
