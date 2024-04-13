@@ -22,30 +22,26 @@ public enum Token: Equatable {
 	case rParen
 	case lSquirly
 	case rSquirly
-	case eof
-	case ident(String)
-	case `let`
 	case function
+	case `let`
 	case `true`
 	case `false`
 	case `if`
 	case `else`
 	case `return`
+	case eof
+	case ident(String)
 	case int(String)
 	case illegal(String)
 
 	public var literal: String {
 		switch self {
-		case let .illegal(literal): return literal
-		case .eof: return ""
-		case let .ident(literal): return literal
-		case let .int(literal): return literal
 		case .equal: return "="
 		case .plus: return "+"
 		case .minus: return "-"
 		case .bang: return "!"
-		case .asterisk: return "*"
 		case .forwardSlash: return "/"
+		case .asterisk: return "*"
 		case .lessThan: return "<"
 		case .greaterThan: return ">"
 		case .comma: return ","
@@ -61,12 +57,16 @@ public enum Token: Equatable {
 		case .if: return "if"
 		case .else: return "else"
 		case .return: return "return"
+		case .eof: return ""
+		case let .ident(literal): return literal
+		case let .int(literal): return literal
+		case let .illegal(literal): return literal
 		}
 	}
 
 	public static var keywords: [String: Token] = [
-		Token.let.literal: .let,
 		Token.function.literal: .function,
+		Token.let.literal: .let,
 		Token.true.literal: .true,
 		Token.false.literal: .false,
 		Token.if.literal: .if,
