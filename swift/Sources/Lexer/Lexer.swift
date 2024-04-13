@@ -44,7 +44,8 @@ public struct Lexer {
 		case "\0": token = .eof
 		default:
 			if character.isLetterOrUnderscore {
-				token = Token.lookupKeywords(identifier: readIdentifier())
+				let ident = readIdentifier()
+				token = Token.keywords[ident] ?? .ident(ident)
 				return token
 			} else if character.isNumber {
 				token = .int(readNumber())

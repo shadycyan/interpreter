@@ -54,16 +54,8 @@ public enum Token: Equatable {
 		}
 	}
 
-	static var keywords: [Token] = [
-		.let,
-		.function,
+	public static var keywords: [String: Token] = [
+		Token.let.literal: .let,
+		Token.function.literal: .function,
 	]
-
-	public static func lookupKeywords(identifier: String) -> Token {
-		if let token = keywords.first(where: { $0.literal == identifier }) {
-			return token
-		} else {
-			return .ident(identifier)
-		}
-	}
 }
