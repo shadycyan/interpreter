@@ -8,26 +8,26 @@
 import Foundation
 
 public enum Token: Equatable {
-	case illegal(String)
-	case eof
-	case ident(String)
-	case int(String)
 	case equal
 	case plus
 	case minus
 	case bang
-	case asterisk
 	case forwardSlash
+	case asterisk
 	case lessThan
 	case greaterThan
-	case comma
 	case semi
+	case comma
 	case lParen
 	case rParen
 	case lSquirly
 	case rSquirly
-	case function
+	case eof
+	case ident(String)
 	case `let`
+	case function
+	case int(String)
+	case illegal(String)
 
 	public var literal: String {
 		switch self {
