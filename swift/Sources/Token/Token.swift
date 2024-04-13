@@ -14,6 +14,12 @@ public enum Token: Equatable {
 	case int(String)
 	case equal
 	case plus
+	case minus
+	case bang
+	case asterisk
+	case forwardSlash
+	case lessThan
+	case greaterThan
 	case comma
 	case semi
 	case lParen
@@ -31,6 +37,12 @@ public enum Token: Equatable {
 		case let .int(literal): return literal
 		case .equal: return "="
 		case .plus: return "+"
+		case .minus: return "-"
+		case .bang: return "!"
+		case .asterisk: return "*"
+		case .forwardSlash: return "/"
+		case .lessThan: return "<"
+		case .greaterThan: return ">"
 		case .comma: return ","
 		case .semi: return ";"
 		case .lParen: return "("
