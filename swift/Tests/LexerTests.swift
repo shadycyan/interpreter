@@ -13,6 +13,8 @@ final class LexerTests: XCTestCase {
 		};
 
 		let result = add(five, ten);
+		!-/*5;
+		5 < 10 > 5;
 		"""
 
 		let tests: [Token] = [
@@ -51,6 +53,18 @@ final class LexerTests: XCTestCase {
 			.comma,
 			.ident("ten"),
 			.rParen,
+			.semi,
+			.bang,
+			.minus,
+			.forwardSlash,
+			.asterisk,
+			.int("5"),
+			.semi,
+			.int("5"),
+			.lessThan,
+			.int("10"),
+			.greaterThan,
+			.int("5"),
 			.semi,
 			.eof,
 		]
