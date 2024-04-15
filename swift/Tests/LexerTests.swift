@@ -21,22 +21,25 @@ final class LexerTests: XCTestCase {
 		} else {
 			return false;
 		}
+
+		10 == 10;
+		10 != 9;
 		"""
 
 		let tests: [Token] = [
 			.let,
 			.ident("five"),
-			.equal,
+			.assign,
 			.int("5"),
 			.semi,
 			.let,
 			.ident("ten"),
-			.equal,
+			.assign,
 			.int("10"),
 			.semi,
 			.let,
 			.ident("add"),
-			.equal,
+			.assign,
 			.function,
 			.lParen,
 			.ident("x"),
@@ -52,7 +55,7 @@ final class LexerTests: XCTestCase {
 			.semi,
 			.let,
 			.ident("result"),
-			.equal,
+			.assign,
 			.ident("add"),
 			.lParen,
 			.ident("five"),
@@ -89,6 +92,14 @@ final class LexerTests: XCTestCase {
 			.false,
 			.semi,
 			.rSquirly,
+			.int("10"),
+			.equal,
+			.int("10"),
+			.semi,
+			.int("10"),
+			.notEqual,
+			.int("9"),
+			.semi,
 			.eof,
 		]
 
