@@ -8,12 +8,14 @@
 import Foundation
 
 public enum Token: Equatable {
-	case equal
+	case assign
 	case plus
 	case minus
 	case bang
 	case forwardSlash
 	case asterisk
+	case equal
+	case notEqual
 	case lessThan
 	case greaterThan
 	case semi
@@ -36,12 +38,14 @@ public enum Token: Equatable {
 
 	public var literal: String {
 		switch self {
-		case .equal: return "="
+		case .assign: return "="
 		case .plus: return "+"
 		case .minus: return "-"
 		case .bang: return "!"
 		case .forwardSlash: return "/"
 		case .asterisk: return "*"
+		case .equal: return "=="
+		case .notEqual: return "!="
 		case .lessThan: return "<"
 		case .greaterThan: return ">"
 		case .comma: return ","

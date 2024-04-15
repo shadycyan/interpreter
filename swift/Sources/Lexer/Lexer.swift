@@ -27,10 +27,10 @@ public struct Lexer {
 
 		let token: Token
 		switch character {
-		case "=": token = .equal
+		case "=": if let ch = peekChar(), ch == "=" { readChar(); token = .equal } else { token = .assign }
 		case "+": token = .plus
 		case "-": token = .minus
-		case "!": token = .bang
+		case "!": if let ch = peekChar(), ch == "=" { readChar(); token = .notEqual } else { token = .bang }
 		case "*": token = .asterisk
 		case "/": token = .forwardSlash
 		case "<": token = .lessThan
@@ -68,6 +68,12 @@ public struct Lexer {
 
 		position = readPosition
 		readPosition = input.index(after: readPosition)
+	}
+
+	func peekChar() -> Character? {
+		readPosition > input.index(before: input.endIndex)
+			? nil
+			: Character(UnicodeScalar(input[readPosition]))
 	}
 
 	mutating func readIdentifier() -> String {
