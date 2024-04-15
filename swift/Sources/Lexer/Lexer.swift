@@ -5,7 +5,6 @@
 //  Created by Cyan on 4/11/24.
 //
 
-import Foundation
 import Token
 
 public struct Lexer {

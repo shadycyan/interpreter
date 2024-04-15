@@ -5,8 +5,6 @@
 //  Created by Cyan on 4/11/24.
 //
 
-import Foundation
-
 public enum Token: Equatable {
 	case assign
 	case plus
