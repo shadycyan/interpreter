@@ -77,17 +77,17 @@ public struct Lexer {
 
 	mutating func readIdentifier() -> String {
 		let pos = position
-		repeat {
+		while character.isLetterOrUnderscore {
 			readChar()
-		} while character.isLetterOrUnderscore
+		}
 		return String(decoding: Array(input[pos..<position]), as: UTF8.self)
 	}
 
 	mutating func readNumber() -> String {
 		let pos = position
-		repeat {
+		while character.isNumber {
 			readChar()
-		} while character.isNumber
+		}
 		return String(decoding: Array(input[pos..<position]), as: UTF8.self)
 	}
 
