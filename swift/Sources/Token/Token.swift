@@ -6,22 +6,30 @@
 //
 
 public enum Token: Equatable {
+	case illegal(String)
+	case eof
+	// Identifiers
+	case ident(String)
+	case int(String)
+	// Operators
 	case assign
 	case plus
 	case minus
 	case bang
 	case forwardSlash
 	case asterisk
-	case equal
-	case notEqual
 	case lessThan
 	case greaterThan
+	case equal
+	case notEqual
+	// Delimiters
 	case semi
 	case comma
 	case lParen
 	case rParen
 	case lSquirly
 	case rSquirly
+	// Keywords
 	case function
 	case `let`
 	case `true`
@@ -29,23 +37,23 @@ public enum Token: Equatable {
 	case `if`
 	case `else`
 	case `return`
-	case eof
-	case ident(String)
-	case int(String)
-	case illegal(String)
 
 	public var literal: String {
 		switch self {
+		case .eof: return ""
+		case let .illegal(literal): return literal
+		case let .ident(literal): return literal
+		case let .int(literal): return literal
 		case .assign: return "="
 		case .plus: return "+"
 		case .minus: return "-"
 		case .bang: return "!"
 		case .forwardSlash: return "/"
 		case .asterisk: return "*"
-		case .equal: return "=="
-		case .notEqual: return "!="
 		case .lessThan: return "<"
 		case .greaterThan: return ">"
+		case .equal: return "=="
+		case .notEqual: return "!="
 		case .comma: return ","
 		case .semi: return ";"
 		case .lParen: return "("
@@ -59,10 +67,6 @@ public enum Token: Equatable {
 		case .if: return "if"
 		case .else: return "else"
 		case .return: return "return"
-		case .eof: return ""
-		case let .ident(literal): return literal
-		case let .int(literal): return literal
-		case let .illegal(literal): return literal
 		}
 	}
 
