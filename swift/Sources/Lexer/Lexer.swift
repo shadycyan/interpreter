@@ -76,19 +76,19 @@ public struct Lexer {
 	}
 
 	mutating func readIdentifier() -> String {
-		let pos = position
-		while character.isLetterOrUnderscore {
-			readChar()
-		}
-		return String(decoding: Array(input[pos..<position]), as: UTF8.self)
+		readWhile(character.isLetterOrUnderscore)
 	}
 
 	mutating func readNumber() -> String {
-		let pos = position
-		while character.isNumber {
+		readWhile(character.isNumber)
+	}
+
+	mutating func readWhile(_ condition: Bool) -> String {
+		let posStart = position
+		while condition {
 			readChar()
 		}
-		return String(decoding: Array(input[pos..<position]), as: UTF8.self)
+		return String(decoding: Array(input[posStart..<position]), as: UTF8.self)
 	}
 
 	mutating func skipWhitespace() {
