@@ -9,7 +9,9 @@ let package = Package(
 		// Targets are the basic building blocks of a package, defining a module or a test suite.
 		// Targets can depend on other targets in this package and products from dependencies.
 		.executableTarget(
-			name: "Monkey"
+			name: "Monkey",
+			dependencies: ["REPL"],
+			path: "Sources/Monkey"
 		),
 		.target(
 			name: "Token",
@@ -20,6 +22,11 @@ let package = Package(
 			name: "Lexer",
 			dependencies: ["Token"],
 			path: "Sources/Lexer"
+		),
+		.target(
+			name: "REPL",
+			dependencies: ["Lexer", "Token"],
+			path: "Sources/REPL"
 		),
 		.testTarget(
 			name: "LexerTest",

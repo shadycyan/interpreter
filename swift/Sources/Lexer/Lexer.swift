@@ -14,14 +14,14 @@ public struct Lexer {
 	private var ch: UInt8 = .zero // current char under examination
 	private var character: Character { Character(UnicodeScalar(ch)) }
 
-	init(input: String) {
+	public init(input: String) {
 		self.input = Array(input.utf8)
 		position = 0
 		readPosition = 0
 		readChar()
 	}
 
-	mutating func nextToken() -> Token {
+	public mutating func nextToken() -> Token {
 		skipWhitespace()
 
 		let token: Token
