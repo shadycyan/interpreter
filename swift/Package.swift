@@ -22,7 +22,7 @@ let package = Package(
 			path: "Sources/Lexer"
 		),
 		.testTarget(
-			name: "LexerTests",
+			name: "LexerTest",
 			dependencies: ["Lexer", "Token"],
 			path: "Tests"
 		),
