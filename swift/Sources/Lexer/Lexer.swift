@@ -76,16 +76,16 @@ public struct Lexer {
 	}
 
 	mutating func readIdentifier() -> String {
-		readWhile(character.isLetterOrUnderscore)
+		readWhile(\.character.isLetterOrUnderscore)
 	}
 
 	mutating func readNumber() -> String {
-		readWhile(character.isNumber)
+		readWhile(\.character.isNumber)
 	}
 
-	mutating func readWhile(_ condition: Bool) -> String {
+	mutating func readWhile(_ condition: KeyPath<Lexer, Bool>) -> String {
 		let posStart = position
-		while condition {
+		while self[keyPath: condition] {
 			readChar()
 		}
 		return String(decoding: Array(input[posStart..<position]), as: UTF8.self)
