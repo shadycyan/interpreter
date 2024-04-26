@@ -8,23 +8,24 @@
 import Token
 
 public struct Lexer {
-	private let input: [UInt8]
+	private let input: [Character]
 	private var position: Int // current position in input (points to current char)
 	private var readPosition: Int // current reading position in input (after current char)
-	private var ch: UInt8 = .zero // current char under examination
-	private var character: Character { Character(UnicodeScalar(ch)) }
+	private var character: Character? = .none // current char under examination
 
 	public init(input: String) {
-		self.input = Array(input.utf8)
+		self.input = Array(input)
 		position = 0
 		readPosition = 0
 		readChar()
 	}
 
-	public mutating func nextToken() -> Token {
+	public mutating func nextToken() -> Token? {
 		skipWhitespace()
 
-		let token: Token
+		guard let character else { return .none }
+
+		let token: Token?
 		switch character {
 		case "=": if let ch = peekChar(), ch == "=" { readChar(); token = .equal } else { token = .assign }
 		case "+": token = .plus
@@ -40,7 +41,6 @@ public struct Lexer {
 		case ")": token = .rParen
 		case "{": token = .lSquirly
 		case "}": token = .rSquirly
-		case "\0": token = .eof
 		default:
 			if character.isLetterOrUnderscore {
 				let ident = readIdentifier()
@@ -59,28 +59,21 @@ public struct Lexer {
 	}
 
 	mutating func readChar() {
-		if readPosition > input.index(before: input.endIndex) {
-			ch = .zero
-		} else {
-			ch = input[readPosition]
-		}
-
+		character = readPosition >= input.count ? .none : input[readPosition]
 		position = readPosition
-		readPosition = input.index(after: readPosition)
+		readPosition = position + 1
 	}
 
 	func peekChar() -> Character? {
-		readPosition > input.index(before: input.endIndex)
-			? nil
-			: Character(UnicodeScalar(input[readPosition]))
+		readPosition >= input.count ? .none : input[readPosition]
 	}
 
 	mutating func readIdentifier() -> String {
-		readWhile(\.character.isLetterOrUnderscore)
+		readWhile(\.character!.isLetterOrUnderscore)
 	}
 
 	mutating func readNumber() -> String {
-		readWhile(\.character.isNumber)
+		readWhile(\.character!.isNumber)
 	}
 
 	mutating func readWhile(_ condition: KeyPath<Lexer, Bool>) -> String {
@@ -88,11 +81,11 @@ public struct Lexer {
 		while self[keyPath: condition] {
 			readChar()
 		}
-		return String(decoding: Array(input[posStart..<position]), as: UTF8.self)
+		return String(input[posStart..<position])
 	}
 
 	mutating func skipWhitespace() {
-		while character.isWhitespace {
+		while let character = character, character.isWhitespace {
 			readChar()
 		}
 	}
